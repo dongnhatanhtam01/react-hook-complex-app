@@ -1,14 +1,14 @@
 import React from "react"
-
+import { NavLink } from "react-router-dom";
 function Header() {
   return (
     <>
-      <header className="header-bar bg-primary mb-3">
+      <header className="header-bar bg-warning mb-3">
         <div className="container d-flex flex-column flex-md-row align-items-center p-3">
           <h4 className="my-0 mr-md-auto font-weight-normal">
-            <a href="/" className="text-white">
+            <NavLink to="/" activeClassName="text-white">
               ComplexApp
-          </a>
+          </NavLink>
           </h4>
           <form className="mb-0 pt-2 pt-md-0">
             <div className="row align-items-center">
