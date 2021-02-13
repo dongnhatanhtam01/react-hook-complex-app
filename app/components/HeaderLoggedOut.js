@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import Axios from "axios"
 
 
-function HeaderLoggedOut() {
+function HeaderLoggedOut(props) {
   const [username, setUsername] = useState()
   const [password, setPassword] = useState()
 
@@ -13,7 +13,7 @@ function HeaderLoggedOut() {
       // Kiểm tra token authen sau khi log in thành công
       if (response.data) {
         console.log(response.data)
-        alert(true)
+        props.setLoggedIn(true)
       }
       else {
         console.log("Incorrect username / password...");

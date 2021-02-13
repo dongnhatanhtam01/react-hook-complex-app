@@ -1,8 +1,12 @@
-import React from "react"
+import React, { useState } from "react"
 import { NavLink } from "react-router-dom";
 import HeaderLoggedOut from "./HeaderLoggedOut";
+import HeaderLoggedIn from "./HeaderLoggedIn"
+
 
 function Header() {
+  const [loggedIn, setLoggedIn] = useState()
+
   return (
     <>
       <header className="header-bar bg-warning mb-3">
@@ -12,7 +16,7 @@ function Header() {
               ComplexApp
           </NavLink>
           </h4>
-          <HeaderLoggedOut />
+          {loggedIn ? <HeaderLoggedIn setLoggedIn={setLoggedIn} /> : <HeaderLoggedOut setLoggedIn={setLoggedIn}/>}
         </div>
       </header>
 
