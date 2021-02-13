@@ -13,12 +13,7 @@ function HomeGuest() {
     alert("hello..!")
     
     try {
-      await Axios.post("http://localhost:8080/register", { username, email, password }).then((response) => {
-        console.log(response.data);
-      }, (error) => {
-        console.log(error);
-      })
-
+      await Axios.post("http://localhost:8080/register", { username, email, password })
       console.log("User was successfully created.")
     } catch (e) {
       console.log(e.response.data)
