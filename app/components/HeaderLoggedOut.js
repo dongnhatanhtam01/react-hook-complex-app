@@ -13,6 +13,7 @@ function HeaderLoggedOut() {
       // Kiểm tra token authen sau khi log in thành công
       if (response.data) {
         console.log(response.data)
+        alert(true)
       }
       else {
         console.log("Incorrect username / password...");
