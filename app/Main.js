@@ -21,7 +21,9 @@ function Main() {
             <Switch>
                 <Route path="/about-us" exact component={About} />
                 <Route path="/terms" exact component={Terms} />
-                <Route path="/" exact component={Home} />
+                <Route path="/" exact  >
+                    {loggedIn ? <Home />: <HomeGuest />}
+                </Route>
             </Switch>
             <Footer />
         </BrowserRouter>
