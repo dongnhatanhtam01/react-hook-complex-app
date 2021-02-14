@@ -26,7 +26,6 @@ function HeaderLoggedIn(props) {
         Sign Out
           </button>
     </div>
-
   )
 }
 

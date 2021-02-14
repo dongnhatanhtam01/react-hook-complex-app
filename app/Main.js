@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import ReactDOM from "react-dom"
 
 import Home from "./components/Home"
@@ -12,13 +12,16 @@ import HomeGuest from "./components/HomeGuest"
 import Footer from "./components/Footer"
 
 function Main() {
+    // lift the state up to high level
+    const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem("complexappToken")))
+
     return (
         <BrowserRouter>
-            <Header />
+            <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
             <Switch>
                 <Route path="/about-us" exact component={About} />
                 <Route path="/terms" exact component={Terms} />
-                <Route path="/" exact component={HomeGuest} />
+                <Route path="/" exact component={Home} />
             </Switch>
             <Footer />
         </BrowserRouter>
