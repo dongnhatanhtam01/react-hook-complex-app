@@ -12,7 +12,9 @@ function HeaderLoggedOut(props) {
       const response = await Axios.post("http://localhost:8080/login", { username, password })
       // Kiểm tra token authen sau khi log in thành công
       if (response.data) {
-        console.log(response.data)
+        localStorage.setItem("complexappToken",response.data.token)
+        localStorage.setItem("complexappUsername",response.data.username)
+        localStorage.setItem("complexappAvatar",response.data.avatar)
         props.setLoggedIn(true)
       }
       else {

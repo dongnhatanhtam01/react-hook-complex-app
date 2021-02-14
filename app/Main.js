@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 
+import Home from "./components/Home"
 // DAY 2
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 import About from "./components/About"

@@ -5,7 +5,10 @@ import HeaderLoggedIn from "./HeaderLoggedIn"
 
 
 function Header() {
-  const [loggedIn, setLoggedIn] = useState()
+  // const [loggedIn, setLoggedIn] = useState() Không dùng useState nữa mà xét thêm điều kiện dưới local
+  // Xem account có được đăng nhập từ trước hay chưa
+  // Nếu có rồi (localStorage thì) thì loggIn = true
+  const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem("complexappToken")))
 
   return (
     <>
@@ -14,12 +17,11 @@ function Header() {
           <h4 className="my-0 mr-md-auto font-weight-normal">
             <NavLink to="/" activeClassName="text-white">
               ComplexApp
-          </NavLink>
+            </NavLink>
           </h4>
-          {loggedIn ? <HeaderLoggedIn setLoggedIn={setLoggedIn} /> : <HeaderLoggedOut setLoggedIn={setLoggedIn}/>}
+          {loggedIn ? <HeaderLoggedIn setLoggedIn={setLoggedIn} /> : <HeaderLoggedOut setLoggedIn={setLoggedIn} />}
         </div>
       </header>
-
     </>
   )
 }
