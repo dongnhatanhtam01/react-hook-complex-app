@@ -1,6 +1,9 @@
 import React, {useState} from "react"
 import ReactDOM from "react-dom"
 
+// DAY 15.2.2021
+import Axios from "axios"
+// DAY 14.2.2021
 import Home from "./components/Home"
 // DAY 2
 import { Route, BrowserRouter, Switch } from "react-router-dom";
@@ -11,6 +14,9 @@ import Header from "./components/Header"
 import HomeGuest from "./components/HomeGuest"
 import Footer from "./components/Footer"
 import CreatePost from "./components/CreatePost";
+
+// DAY 15.2.2021 Axios
+Axios.defaults.baseURL = "http://localhost:8080"
 
 function Main() {
     // lift the state up to high level
