@@ -18,7 +18,7 @@ function Header(props) {
               ComplexApp
             </NavLink>
           </h4>
-          {props.loggedIn ? <HeaderLoggedIn setLoggedIn={props.setLoggedIn} /> : <HeaderLoggedOut setLoggedIn={props.setLoggedIn} />}
+          {props.loggedIn ? <HeaderLoggedIn setLoggedIn={props.setLoggedIn} /> : <HeaderLoggedOut addFlashMessage={props.addFlashMessage}  setLoggedIn={props.setLoggedIn} />}
         </div>
       </header>
     </>

@@ -16,6 +16,7 @@ function HeaderLoggedOut(props) {
         localStorage.setItem("complexappUsername",response.data.username)
         localStorage.setItem("complexappAvatar",response.data.avatar)
         props.setLoggedIn(true)
+        props.addFlashMessage("Congrats, you successful logged in")
       }
       else {
         console.log("Incorrect username / password...");

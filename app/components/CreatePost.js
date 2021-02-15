@@ -21,7 +21,10 @@ function CreatePost(props) {
       })
       console.log("Bạn đã tạo thành công 1 bài post mới...")
       // redirect to new post url...
-      props.history.push(`/post/${response.data[0]._id}`)
+      if (response) {debugger
+        props.addFlashMessage("Congrats, you successful created a post")
+        props.history.push(`/post/${response.data[0]._id}`)
+      }
     }
     catch (e) {
       console.log(e.response.data);
