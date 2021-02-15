@@ -14,14 +14,14 @@ function CreatePost(props) {
     e.preventDefault()
     alert(true)
     try {
-      await Axios.post("/create-post", {
+      const response = await Axios.post("/create-post", {
         token: localStorage.getItem("complexappToken"),
         title,
         body
       })
       console.log("Bạn đã tạo thành công 1 bài post mới...")
       // redirect to new post url...
-      props.history.push("/post/00000000000000000")
+      props.history.push(`/post/${response.data[0]._id}`)
     }
     catch (e) {
       console.log(e.response.data);
