@@ -1,4 +1,6 @@
 import React, { useEffect } from "react"
+import {NavLink} from "react-router-dom"
+
 
 function HeaderLoggedIn(props) {
   function handleLogout() {
@@ -19,9 +21,9 @@ function HeaderLoggedIn(props) {
       <a href="#" className="mr-2">
         <img className="small-header-avatar" src={localStorage.getItem("complexappAvatar")} />
       </a>
-      <a className="btn btn-sm btn-success mr-2" href="/create-post">
+      <NavLink className="btn btn-sm btn-success mr-2" to="/create-new-post">
         Create Post
-          </a>
+          </NavLink>
       <button onClick={() => handleLogout()} className="btn btn-sm btn-secondary">
         Sign Out
           </button>

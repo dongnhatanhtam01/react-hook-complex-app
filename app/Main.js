@@ -10,6 +10,7 @@ import Terms from "./components/Terms"
 import Header from "./components/Header"
 import HomeGuest from "./components/HomeGuest"
 import Footer from "./components/Footer"
+import CreatePost from "./components/CreatePost";
 
 function Main() {
     // lift the state up to high level
@@ -19,6 +20,7 @@ function Main() {
         <BrowserRouter>
             <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
             <Switch>
+                <Route path="/create-new-post" exact component={CreatePost} />
                 <Route path="/about-us" exact component={About} />
                 <Route path="/terms" exact component={Terms} />
                 <Route path="/" exact  >
