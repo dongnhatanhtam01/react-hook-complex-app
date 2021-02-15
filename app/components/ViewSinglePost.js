@@ -1,7 +1,21 @@
 import React, { useEffect } from "react"
 import UseEffectPage from "./UseEffectPage"
+import Axios from "axios";
 
-function ViewSinglePost() {
+
+function ViewSinglePost(props) {
+  const _showDetailPost = {}
+  async function GetSinglePost() {
+    try {
+      const response = await Axios.get(`${props.location.pathname}`)
+      _showDetailPost[createDate] = response.createDate
+      console.log(_showDetailPost);
+    }
+    catch (error) {
+      // console.log(error.reponse.data);
+    }
+  }
+  GetSinglePost()
   return (
     <UseEffectPage title="...xxx">
       <div className="d-flex justify-content-between">
