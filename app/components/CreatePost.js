@@ -12,7 +12,7 @@ function CreatePost(props) {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    alert(true)
+    alert("You had clicked create-post, right?")
     try {
       const response = await Axios.post("/create-post", {
         token: localStorage.getItem("complexappToken"),

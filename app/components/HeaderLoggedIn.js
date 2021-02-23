@@ -8,6 +8,9 @@ function HeaderLoggedIn(props) {
     localStorage.removeItem("complexappToken")
     localStorage.removeItem("complexappUsername")
     localStorage.removeItem("complexappAvatar")
+    if (!localStorage.getItem("complexappToken")) {
+      props.addFlashMessage("You successful logged out")
+    }
   }
   return (
     <div className="flex-row my-3 my-md-0">
