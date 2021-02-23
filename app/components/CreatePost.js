@@ -14,7 +14,7 @@ import { withRouter } from "react-router-dom";
 
 // lấy histỏy thông qua CreatePost(props)
 function CreatePost(props) {
-  const addFlashMessage = useContext(ExampleContext)
+  const { addFlashMessage } = useContext(ExampleContext) // obj Provider destructering
   const [title, setTitle] = useState()
   const [body, setBody] = useState()
 
@@ -30,7 +30,7 @@ function CreatePost(props) {
       console.log("Bạn đã tạo thành công 1 bài post mới..!")
       // redirect to new post url...
       if (response) {
-        addFlashMessage("Congrats, you successful created a post!")
+        addFlashMessage("Congrats, you successful created a post!!")
         props.history.push(`/post/${response.data[0]._id}`)
       }
     }
