@@ -9,7 +9,7 @@ function HeaderLoggedIn(props) {
     localStorage.removeItem("complexappUsername")
     localStorage.removeItem("complexappAvatar")
     if (!localStorage.getItem("complexappToken")) {
-      props.addFlashMessage("You successful logged out")
+      props.addFlashMessage("You successful logged out your account")
     }
   }
   return (
