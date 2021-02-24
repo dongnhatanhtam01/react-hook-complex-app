@@ -33,10 +33,10 @@ function Main() {
   return (
     /** DAY 23.02.2021 adding Ex.., and distribute to particular
      component consuming the addFlashMessage trong value*/
-    <ExampleContext.Provider value={{addFlashMessage, setLoggedIn}}>
+    <ExampleContext.Provider value={{ addFlashMessage, setLoggedIn }}>
       <BrowserRouter>
         <FlashMessages messages={flashMessages} />
-        <Header addFlashMessage={addFlashMessage} loggedIn={loggedIn}  />
+        <Header addFlashMessage={addFlashMessage} loggedIn={loggedIn} />
         <Switch>
           <Route path="/post/:id" exact component={ViewSinglePost} />
           <Route path="/create-new-post" exact  >
