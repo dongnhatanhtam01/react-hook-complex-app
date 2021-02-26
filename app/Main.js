@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useReducer } from "react"
 import ReactDOM from "react-dom"
 
 // DAY 23.02.2021
@@ -23,6 +23,25 @@ import FlashMessages from "./components/FlashMessages"
 Axios.defaults.baseURL = "http://localhost:8080"
 
 function Main() {
+  const initialState = {
+    loggedIn: Boolean(localStorage.getItem("complexappToken")),
+    flashMessages: []
+  }
+  function ourReducer(state, action) {
+    switch (action.type) {
+      case "LOG_IN_ACTION":
+        return { loggedIn: true, flashMessages: state.flashMessages }
+      case "LOG_OUT_ACTION":
+        return { loggedIn: false, flashMessages: state.flashMessages }
+      case "FLASH_MESSAGE_ACTION":
+        return { loggedIn: state.loggedIn, flashMessages: state.flashMessages.concat(action.value) }
+    }
+  }
+  const [state, dispatch] = useReducer(ourReducer, initialState)
+  dispatch({ "type": "LOG_IN_ACTION" })
+  dispatch({ "type": "LOG_OUT_ACTION" })
+  dispatch({ "type": "FLASH_MESSAGE_ACTION" })
+
   const [flashMessages, setFlashMessages] = useState([])
   function addFlashMessage(msg) {
     setFlashMessages(prev => prev.concat(msg))
