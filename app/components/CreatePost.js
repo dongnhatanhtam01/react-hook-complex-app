@@ -7,14 +7,15 @@ import UseEffectPage from "./UseEffectPage"
 thay vì (props)
 import thằng context vô, là thằng #ExampleContext.js
 */
-import ExampleContext from "../ExampleContext"
+import DispatchContext from "../DispatchContext"
 
 // watch component history, location by withRouter
 import { withRouter } from "react-router-dom";
 
 // lấy histỏy thông qua CreatePost(props)
 function CreatePost(props) {
-  const { addFlashMessage } = useContext(ExampleContext) // obj Provider destructering
+  const appDispatch = useContext(DispatchContext)
+  // const { addFlashMessage } = useContext(ExampleContext) 
   const [title, setTitle] = useState()
   const [body, setBody] = useState()
 
@@ -30,7 +31,8 @@ function CreatePost(props) {
       console.log("Bạn đã tạo thành công 1 bài post mới..!")
       // redirect to new post url...
       if (response) {
-        addFlashMessage("Congrats, you successful created a post!!")
+        appDispatch({ type: "FLASH_MESSAGE_ACTION", value: "Congrats, you successful created a post!!" })
+        // addFlashMessage("Congrats, you successful created a post!!")
         props.history.push(`/post/${response.data[0]._id}`)
       }
     }

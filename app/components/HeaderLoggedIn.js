@@ -1,16 +1,18 @@
 import React, { useEffect, useContext } from "react"
 import { NavLink } from "react-router-dom"
-import ExampleContext from "../ExampleContext"
+import DispatchContext from "../DispatchContext"
 
 function HeaderLoggedIn(props) {
-  const { addFlashMessage, setLoggedIn } = useContext(ExampleContext)
+  const appDispatch = useContext(DispatchContext)
+  // const { addFlashMessage, setLoggedIn } = useContext(ExampleContext)
   function handleLogout() {
-    setLoggedIn(false)
+    appDispatch({ type: "LOG_OUT_ACTION" })
     localStorage.removeItem("complexappToken")
     localStorage.removeItem("complexappUsername")
     localStorage.removeItem("complexappAvatar")
     if (!localStorage.getItem("complexappToken")) {
-      addFlashMessage("You successful logged out your account!")
+      appDispatch({type: "FLASH_MESSAGE_ACTION", value: "See you again..."})
+      // addFlashMessage("You successful logged out your account!")
     }
   }
   return (

@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from "react"
 import Axios from "axios"
-import ExampleContext from "../ExampleContext"
+import DispatchContext from "../DispatchContext"
 
 function HeaderLoggedOut(props) {
-  const {addFlashMessage, setLoggedIn} = useContext(ExampleContext)
+  const appDispatch = useContext(DispatchContext)
+  // const {addFlashMessage, setLoggedIn} = useContext(ExampleContext)
   const [username, setUsername] = useState()
   const [password, setPassword] = useState()
 
@@ -13,11 +14,11 @@ function HeaderLoggedOut(props) {
       const response = await Axios.post("/login", { username, password })
       // Kiểm tra token authen sau khi log in thành công
       if (response.data) {
-        localStorage.setItem("complexappToken",response.data.token)
-        localStorage.setItem("complexappUsername",response.data.username)
-        localStorage.setItem("complexappAvatar",response.data.avatar)
-        setLoggedIn(true)
-        addFlashMessage("Congrats, you successful logged in!")
+        localStorage.setItem("complexappToken", response.data.token)
+        localStorage.setItem("complexappUsername", response.data.username)
+        localStorage.setItem("complexappAvatar", response.data.avatar)
+        appDispatch({ type: "LOG_IN_ACTION" })
+        appDispatch({ type: "FLASH_MESSAGE_ACTION" , value: "Congrat, You have logged in successfully..!"})
       }
       else {
         console.log("Incorrect username / password...");
