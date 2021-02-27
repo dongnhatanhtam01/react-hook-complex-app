@@ -48,7 +48,7 @@ function Main() {
       <DispatchContext.Provider value={dispatch}>
         <BrowserRouter>
           <FlashMessages messages={state.flashMessages} />
-          <Header  />
+          <Header />
           <Switch>
             <Route path="/post/:id" exact component={ViewSinglePost} />
             <Route path="/create-new-post" exact  >
