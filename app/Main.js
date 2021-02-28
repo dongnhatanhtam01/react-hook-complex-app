@@ -1,6 +1,8 @@
 import React, { useState, useReducer } from "react"
 import ReactDOM from "react-dom"
 
+// DAY 27.02.2021 Thay vì dùng useReducer có npm hỗ trợ
+import { useImmerReducer } from "use-immer"
 // DAY 26.02.2021
 import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
@@ -29,17 +31,20 @@ function Main() {
     loggedIn: Boolean(localStorage.getItem("complexappToken")),
     flashMessages: []
   }
-  function ourReducer(state, action) {
+  function ourReducer(draft, action) {
     switch (action.type) {
       case "LOG_IN_ACTION":
-        return { loggedIn: true, flashMessages: state.flashMessages }
+        draft.loggedIn = true
+        return
       case "LOG_OUT_ACTION":
-        return { loggedIn: false, flashMessages: state.flashMessages }
+        draft.loggedIn = false
+        return
       case "FLASH_MESSAGE_ACTION":
-        return { loggedIn: state.loggedIn, flashMessages: state.flashMessages.concat(action.value) }
+        draft.flashMessages.push(action.value)
+        return
     }
   }
-  const [state, dispatch] = useReducer(ourReducer, initialState)
+  const [state, dispatch] = useImmerReducer(ourReducer, initialState)
 
   return (
     /** DAY 23.02.2021 adding Ex.., and distribute to particular
