@@ -1,10 +1,12 @@
-import React, { useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import UseEffectPage from "./UseEffectPage"
+import StateContext from "../StateContext"
 
 function Home() {
+  const appState = useContext(StateContext)
   return (
     <UseEffectPage title="Your feed ">
-      <h2 className="text-center">Hello <strong>{localStorage.getItem("complexappUsername")}</strong>, your feed is empty.</h2>
+      <h2 className="text-center">Hello <strong>{appState.user.username}</strong>, your feed is empty.</h2>
       <p className="lead text-muted text-center">Your feed displays the latest posts from the people you follow. If you don&rsquo;t have any friends to follow that&rsquo;s okay; you can use the &ldquo;Search&rdquo; feature in the top menu bar to find content written by people with similar interests and then follow them.</p>
     </UseEffectPage>
   )

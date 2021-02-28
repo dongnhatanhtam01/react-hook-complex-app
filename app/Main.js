@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react"
+import React, { useState, useReducer, useEffect } from "react"
 import ReactDOM from "react-dom"
 
 // DAY 27.02.2021 Thay vì dùng useReducer có npm hỗ trợ
@@ -29,12 +29,18 @@ Axios.defaults.baseURL = "http://localhost:8080"
 function Main() {
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("complexappToken")),
-    flashMessages: []
+    flashMessages: [],
+    user: {
+      token: localStorage.getItem("complexappToken"),
+      username: localStorage.getItem("complexappUsername"),
+      avatar: localStorage.getItem("complexappAvatar")
+    }
   }
   function ourReducer(draft, action) {
     switch (action.type) {
       case "LOG_IN_ACTION":
         draft.loggedIn = true
+        draft.user = action.data
         return
       case "LOG_OUT_ACTION":
         draft.loggedIn = false
@@ -45,6 +51,18 @@ function Main() {
     }
   }
   const [state, dispatch] = useImmerReducer(ourReducer, initialState)
+
+  useEffect(() => {
+    if (state.loggedIn) {
+      localStorage.setItem("complexappToken", state.user.token)
+      localStorage.setItem("complexappUsername", state.user.username)
+      localStorage.setItem("complexappAvatar", state.user.avatar)
+    } else {
+      localStorage.removeItem("complexappToken")
+      localStorage.removeItem("complexappUsername")
+      localStorage.removeItem("complexappAvatar")
+    }
+  }, [state.loggedIn])
 
   return (
     /** DAY 23.02.2021 adding Ex.., and distribute to particular

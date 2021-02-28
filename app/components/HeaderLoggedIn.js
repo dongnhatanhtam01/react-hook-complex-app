@@ -1,15 +1,14 @@
 import React, { useEffect, useContext } from "react"
 import { NavLink } from "react-router-dom"
 import DispatchContext from "../DispatchContext"
+import StateContext from "../StateContext"
 
 function HeaderLoggedIn(props) {
   const appDispatch = useContext(DispatchContext)
+  const appState = useContext(StateContext)
   // const { addFlashMessage, setLoggedIn } = useContext(ExampleContext)
   function handleLogout() {
     appDispatch({ type: "LOG_OUT_ACTION" })
-    localStorage.removeItem("complexappToken")
-    localStorage.removeItem("complexappUsername")
-    localStorage.removeItem("complexappAvatar")
     if (!localStorage.getItem("complexappToken")) {
       appDispatch({type: "FLASH_MESSAGE_ACTION", value: "See you again..."})
       // addFlashMessage("You successful logged out your account!")
@@ -25,7 +24,7 @@ function HeaderLoggedIn(props) {
         <span className="chat-count-badge text-white"> </span>
       </span>
       <a href="#" className="mr-2">
-        <img className="small-header-avatar" src={localStorage.getItem("complexappAvatar")} />
+        <img className="small-header-avatar" src={appState.user.avatar} />
       </a>
       <NavLink className="btn btn-sm btn-success mr-2" to="/create-new-post">
         Create Post

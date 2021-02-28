@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react"
 import Axios from "axios";
 import UseEffectPage from "./UseEffectPage"
 
+import StateContext  from "../StateContext";
 /** 23.02.2021
  * Muốn truyền hàm thông qua context của provider
 thay vì (props)
@@ -14,6 +15,7 @@ import { withRouter } from "react-router-dom";
 
 // lấy histỏy thông qua CreatePost(props)
 function CreatePost(props) {
+  const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
   // const { addFlashMessage } = useContext(ExampleContext) 
   const [title, setTitle] = useState()
@@ -24,7 +26,7 @@ function CreatePost(props) {
     alert("You had clicked create-post, right?")
     try {
       const response = await Axios.post("/create-post", {
-        token: localStorage.getItem("complexappToken"),
+        token: appState.user.token,
         title,
         body
       })
