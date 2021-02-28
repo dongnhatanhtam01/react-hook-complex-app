@@ -1,6 +1,8 @@
 import React, { useState, useReducer, useEffect } from "react"
 import ReactDOM from "react-dom"
 
+//DAY 28
+import Profile  from "./components/Profile";
 // DAY 27.02.2021 Thay vì dùng useReducer có npm hỗ trợ
 import { useImmerReducer } from "use-immer"
 // DAY 26.02.2021
@@ -73,6 +75,9 @@ function Main() {
           <FlashMessages messages={state.flashMessages} />
           <Header />
           <Switch>
+            <Route path="/profile/:username">
+              <Profile/>
+            </Route>
             <Route path="/post/:id" exact component={ViewSinglePost} />
             <Route path="/create-new-post" exact  >
               <CreatePost />
