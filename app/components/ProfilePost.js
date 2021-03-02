@@ -1,7 +1,7 @@
 import Axios from "axios"
 import React, { useEffect, useState } from "react"
 
-import { useParams, NavLink } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 
 function ProfilePost() {
   const { username } = useParams()
@@ -32,10 +32,10 @@ function ProfilePost() {
         // ngày date máy tính theo 0, tháng không có tháng 0
         const dateFomatted = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
         return (
-          <NavLink key={post._id} to={`post/${post._id}`} className="list-group-item list-group-item-action">
+          <Link key={post._id} to={`/post/${post._id}`} className="list-group-item list-group-item-action">
             <img className="avatar-tiny" src={post.author.avatar} /> <strong>{post.title}</strong>{" "}
             <span className="text-muted small">{dateFomatted} </span>
-          </NavLink>
+          </Link>
         )
       })}
     </div>
