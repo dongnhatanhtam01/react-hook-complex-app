@@ -11,17 +11,26 @@ function ViewSinglePost(props) {
   const [post, setPost] = useState()
 
   useEffect(() => {
+    // nhớ là thông thường biến ngoài không truy nhập được vô scope trong axios
+    // dùng của nó thì được :D
+    const ourRequest = Axios.CancelToken.source()
+
     async function fetchPost() {
       try {
-        const response = await Axios.get(`/post/${id}`)
+        const response = await Axios.get(`/post/${id}`, {cancelToken: ourRequest.token})
         setPost(response.data)
         setIsLoading(false)
       }
       catch (e) {
-        console.log("There was a problem.");
+        console.log("There was a problem or the request was cancel");
       }
     }
     fetchPost()
+    // clean up + cancle request
+    // fix unmount component bug
+    return () => {
+      ourRequest.cancel()
+    }
   }, [])
 
   if (isLoading) return <UseEffectPage title="...">
