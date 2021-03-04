@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import UseEffectPage from "./UseEffectPage"
 import Axios from "axios";
 import { useParams, NavLink } from "react-router-dom"
+import LoadingDotsIcon from "./LoadingDotsIcon";
 // DAY 03.03.2021
 
 function ViewSinglePost(props) {
@@ -23,7 +24,9 @@ function ViewSinglePost(props) {
     fetchPost()
   }, [])
 
-  if (isLoading) return <UseEffectPage title="..."><div>Loading...</div></UseEffectPage>
+  if (isLoading) return <UseEffectPage title="...">
+    <LoadingDotsIcon />
+  </UseEffectPage>
 
   const _showDetailPost = {}
   async function GetSinglePost() {
@@ -56,7 +59,7 @@ function ViewSinglePost(props) {
         <NavLink to={`/profile/${post.author.username}`}>
           <img className="avatar-tiny" src={post.author.avatar} />
         </NavLink>
-        Posted by <NavLink to={`/profile/${post.author.username}`}>{post.author.username}</NavLink> on {" " }{dateFomatted}
+        Posted by <NavLink to={`/profile/${post.author.username}`}>{post.author.username}</NavLink> on {" "}{dateFomatted}
       </p>
 
       <div className="body-content">
