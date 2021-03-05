@@ -3,7 +3,7 @@ import UseEffectPage from "./UseEffectPage"
 import Axios from "axios";
 import { useParams, NavLink } from "react-router-dom"
 import LoadingDotsIcon from "./LoadingDotsIcon";
-// DAY 03.03.2021
+import ReactMarkDown from "react-markdown"
 
 function ViewSinglePost(props) {
   const { id } = useParams()
@@ -72,7 +72,7 @@ function ViewSinglePost(props) {
       </p>
 
       <div className="body-content">
-        {post.body}
+        <ReactMarkDown children={post.body} allowedTypes={["paragraph", "strong", "emphasis", "text", "heading", "list", "listItem"]}/>
       </div>
     </UseEffectPage>
   )
