@@ -1,6 +1,7 @@
 import React, { useState, useReducer, useEffect } from "react"
 import ReactDOM from "react-dom"
-
+// DAY 05.03.2021
+import EditPost from "./components/EditPost"
 //DAY 28
 import Profile  from "./components/Profile";
 // DAY 27.02.2021 Thay vì dùng useReducer có npm hỗ trợ
@@ -79,6 +80,7 @@ function Main() {
               <Profile/>
             </Route>
             <Route path="/post/:id" exact component={ViewSinglePost} />
+            <Route path="/post/:id/edit" exact component={EditPost} />
             <Route path="/create-new-post" exact  >
               <CreatePost />
             </Route>

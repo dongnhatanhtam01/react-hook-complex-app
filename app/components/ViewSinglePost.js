@@ -18,7 +18,7 @@ function ViewSinglePost(props) {
 
     async function fetchPost() {
       try {
-        const response = await Axios.get(`/post/${id}`, {cancelToken: ourRequest.token})
+        const response = await Axios.get(`/post/${id}`, { cancelToken: ourRequest.token })
         setPost(response.data)
         setIsLoading(false)
       }
@@ -60,7 +60,7 @@ function ViewSinglePost(props) {
       <div className="d-flex justify-content-between">
         <h2>{post.title}</h2>
         <span className="pt-2">
-          <a href="#" data-tip="Edit-marker" data-for="edit"  className="text-primary mr-2"><i className="fas fa-edit"></i></a>
+          <NavLink to={`/post/${id}/edit`} data-tip="Edit-marker" data-for="edit" className="text-primary mr-2"><i className="fas fa-edit"></i></NavLink>
           <ReactToolTip id="edit" className="custom-tooltip" /> {" "}
           <a data-tip="delete-marker" data-for="delete" className="delete-post-button text-danger"><i className="fas fa-trash"></i></a>
           <ReactToolTip id="delete" className="custom-tooltip" />
@@ -75,7 +75,7 @@ function ViewSinglePost(props) {
       </p>
 
       <div className="body-content">
-        <ReactMarkDown children={post.body} allowedTypes={["paragraph", "strong", "emphasis", "text", "heading", "list", "listItem"]}/>
+        <ReactMarkDown children={post.body} allowedTypes={["paragraph", "strong", "emphasis", "text", "heading", "list", "listItem"]} />
       </div>
     </UseEffectPage>
   )
