@@ -35,7 +35,7 @@ function CreatePost(props) {
       if (response) {
         appDispatch({ type: "FLASH_MESSAGE_ACTION", value: "Congrats, you successful created a post!!" })
         // addFlashMessage("Congrats, you successful created a post!!")
-        props.history.push(`/post/${response.data[0]._id}`)
+        props.history.push(`/post/${response.data}`)
       }
     }
     catch (e) {
