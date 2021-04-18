@@ -42,7 +42,7 @@ function EditPost(props) {
     draft.body.value = action.value
     return
    case "submitRequest":
-    if(!draft.title.hasErrors && !draft.body.hasErrors) {
+    if (!draft.title.hasErrors && !draft.body.hasErrors) {
      draft.sendCount++
     }
     return
@@ -58,6 +58,12 @@ function EditPost(props) {
      draft.title.message = "You must provide title."
     }
     return
+   case "bodyRules":
+    if (!action.value.trim()) {
+     draft.body.hasErrors = true
+     draft.body.message = "You must provide title."
+    }
+    return
   }
  }
 
@@ -67,6 +73,7 @@ function EditPost(props) {
   e.preventDefault()
   // validate onBlur có lỗ hổng, khắc phục bằng cách thêm rule bắt nếu không có title
   dispatch({ type: "titleRules", value: state.title.value })
+  dispatch({ type: "bodyRules", value: state.body.value })
   dispatch({ type: "submitRequest" })
  }
 
@@ -130,7 +137,8 @@ function EditPost(props) {
      <label htmlFor="post-body" className="text-muted mb-1 d-block">
       <small>Body Content</small>
      </label>
-     <textarea onChange={e => dispatch({ type: "bodyChange", value: e.target.value })} name="body" id="post-body" className="body-content tall-textarea form-control" type="text" value={state.body.value} />
+     <textarea onBlur={e => dispatch({ type: "bodyRules", value: e.target.value })} onChange={e => dispatch({ type: "bodyChange", value: e.target.value })} name="body" id="post-body" className="body-content tall-textarea form-control" type="text" value={state.body.value} />
+     {state.body.hasErrors && <div className="alert alert-danger small invalidFeedback">{state.body.message}</div>}
     </div>
 
     <button className="btn btn-primary" disabled={state.isSaving}>
