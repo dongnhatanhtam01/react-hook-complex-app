@@ -7,7 +7,7 @@ import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
 import UseEffectPage from "./UseEffectPage"
 
-function EditPost() {
+function EditPost(props) {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
 
@@ -86,6 +86,7 @@ function EditPost() {
           // alert("congrat, post data complete...")
           dispatch({ type: "saveRequestFinished" })
           appDispatch({ type: "FLASH_MESSAGE_ACTION", value: "Post was updated." })
+          props.history.push(`/post/${state.id}`)
         } catch (e) {
           console.log("There was a problem or the request was cancelled.")
         }
