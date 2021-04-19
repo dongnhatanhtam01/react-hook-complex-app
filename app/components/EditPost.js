@@ -126,7 +126,9 @@ function EditPost(props) {
 
  return (
   <UseEffectPage title="Edit Post">
-   <form onSubmit={submitHandler}>
+   {/* thêm vào đường dẫn nhỏ quay về danh sách bài post */}
+   <Link className="small font-weight-bold" to={`/post/${state.id}`}>&laquo;Back to post permanlink</Link>
+   <form className="mt-3" onSubmit={submitHandler}>
     <div className="form-group">
      <label htmlFor="post-title" className="text-muted mb-1">
       <small>Title</small>
