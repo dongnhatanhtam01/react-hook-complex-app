@@ -6,6 +6,7 @@ import LoadingDotsIcon from "./LoadingDotsIcon"
 import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
 import UseEffectPage from "./UseEffectPage"
+import NotFound from "./NotFound"
 
 function EditPost(props) {
  const appState = useContext(StateContext)
@@ -128,12 +129,7 @@ function EditPost(props) {
 
  if (state.notFound) {
   return (
-   <UseEffectPage title="Not Found">
-    <div className="text-center">
-     <h2>Whoops, we can not find this page!</h2>
-     <p className="lead text-muted">You can visit <Link to="/">homepage</Link> to get a fresh start.</p>
-    </div>
-   </UseEffectPage>
+   <NotFound></NotFound>
   )
  }
 
