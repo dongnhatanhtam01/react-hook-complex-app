@@ -25,7 +25,8 @@ function EditPost(props) {
   isFetching: true,
   isSaving: false,
   id: useParams().id,
-  sendCount: 0
+  sendCount: 0,
+  notFound: false
  }
 
  function ourReducer(draft, action) {
@@ -66,6 +67,9 @@ function EditPost(props) {
      draft.body.message = "You must provide title."
     }
     return
+   case "noteFound":
+    draft.notFound = true
+    return
   }
  }
 
@@ -84,7 +88,11 @@ function EditPost(props) {
   async function fetchPost() {
    try {
     const response = await Axios.get(`/post/${state.id}`, { cancelToken: ourRequest.token })
-    dispatch({ type: "fetchComplete", value: response.data })
+    if (response.data) {
+     dispatch({ type: "fetchComplete", value: response.data })
+    } else {
+     dispatch({ type: "noteFound" })
+    }
    } catch (e) {
     console.log("There was a problem or the request was cancelled.")
    }
@@ -116,6 +124,18 @@ function EditPost(props) {
    }
   }
  }, [state.sendCount])
+
+
+ if (state.notFound) {
+  return (
+   <UseEffectPage title="Not Found">
+    <div className="text-center">
+     <h2>Whoops, we can not find this page!</h2>
+     <p className="lead text-muted">You can visit <Link to="/">homepage</Link> to get a fresh start.</p>
+    </div>
+   </UseEffectPage>
+  )
+ }
 
  if (state.isFetching)
   return (
