@@ -5,6 +5,7 @@ import { useParams, NavLink } from "react-router-dom"
 import LoadingDotsIcon from "./LoadingDotsIcon";
 import ReactMarkDown from "react-markdown"
 import ReactToolTip from "react-tooltip"
+import NotFound from "./NotFound"
 
 function ViewSinglePost(props) {
  const { id } = useParams()
@@ -32,6 +33,12 @@ function ViewSinglePost(props) {
    ourRequest.cancel()
   }
  }, [])
+
+ if (!isLoading && !post) {
+  return (
+   <NotFound/>
+  )
+ }
 
  if (isLoading) return <UseEffectPage title="...">
   <LoadingDotsIcon />

@@ -1,6 +1,7 @@
 import React from "react"
 import UseEffectPage from "./UseEffectPage"
 import { Link } from "react-router-dom"
+
 function NotFound() {
  return (
   <UseEffectPage title="Not Found">

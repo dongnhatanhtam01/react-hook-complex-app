@@ -25,7 +25,7 @@ import Footer from "./components/Footer"
 import CreatePost from "./components/CreatePost";
 import ViewSinglePost from "./components/ViewSinglePost";
 import FlashMessages from "./components/FlashMessages"
-
+import NotFound from "./components/NotFound"
 // DAY 15.2.2021 Axios
 Axios.defaults.baseURL = "http://localhost:8080"
 
@@ -88,6 +88,9 @@ function Main() {
       <Route path="/terms" exact component={Terms} />
       <Route path="/" exact  >
        {state.loggedIn ? <Home /> : <HomeGuest />}
+      </Route>
+      <Route>
+       <NotFound />
       </Route>
      </Switch>
      <Footer />
