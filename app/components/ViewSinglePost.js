@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import UseEffectPage from "./UseEffectPage"
 import Axios from "axios";
 import { useParams, NavLink } from "react-router-dom"
@@ -6,8 +6,10 @@ import LoadingDotsIcon from "./LoadingDotsIcon";
 import ReactMarkDown from "react-markdown"
 import ReactToolTip from "react-tooltip"
 import NotFound from "./NotFound"
+import StateContext from "../StateContext"
 
 function ViewSinglePost(props) {
+ const appState = useContext(StateContext)
  const { id } = useParams()
  const [isLoading, setIsLoading] = useState(true)
  const [post, setPost] = useState()
@@ -36,7 +38,7 @@ function ViewSinglePost(props) {
 
  if (!isLoading && !post) {
   return (
-   <NotFound/>
+   <NotFound />
   )
  }
 
@@ -61,16 +63,24 @@ function ViewSinglePost(props) {
  const date = new Date(post.createdDate)
  const dateFomatted = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
 
+ function isOwner() {
+  if(appState.loggedIn) {
+   return appState.user.username == post.author.username
+  }
+  return false
+ }
  return (
   <UseEffectPage title={post.title}>
    <div className="d-flex justify-content-between">
     <h2>{post.title}</h2>
-    <span className="pt-2">
+    {isOwner() && (
+     <span className="pt-2">
      <NavLink to={`/post/${id}/edit`} data-tip="Edit-marker" data-for="edit" className="text-primary mr-2"><i className="fas fa-edit"></i></NavLink>
      <ReactToolTip id="edit" className="custom-tooltip" /> {" "}
      <a data-tip="delete-marker" data-for="delete" className="delete-post-button text-danger"><i className="fas fa-trash"></i></a>
      <ReactToolTip id="delete" className="custom-tooltip" />
     </span>
+    )}
    </div>
 
    <p className="text-muted small mb-4">
