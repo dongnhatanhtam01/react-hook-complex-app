@@ -1,15 +1,17 @@
 import React, { useEffect, useState, useContext } from "react"
 import UseEffectPage from "./UseEffectPage"
 import Axios from "axios";
-import { useParams, NavLink } from "react-router-dom"
+import { useParams, NavLink, withRouter } from "react-router-dom"
 import LoadingDotsIcon from "./LoadingDotsIcon";
 import ReactMarkDown from "react-markdown"
 import ReactToolTip from "react-tooltip"
 import NotFound from "./NotFound"
 import StateContext from "../StateContext"
+import DispatchContext from "../DispatchContext"
 
 function ViewSinglePost(props) {
  const appState = useContext(StateContext)
+ const appDispatch = useContext(DispatchContext)
  const { id } = useParams()
  const [isLoading, setIsLoading] = useState(true)
  const [post, setPost] = useState()
@@ -64,22 +66,43 @@ function ViewSinglePost(props) {
  const dateFomatted = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
 
  function isOwner() {
-  if(appState.loggedIn) {
+  if (appState.loggedIn) {
    return appState.user.username == post.author.username
   }
   return false
  }
+
+ // Xóa bài post - tính năng mới 04.2021
+ async function deleteHandler(a) {
+  console.log(a)
+  const areYouSure = window.confirm("Do you really want to delete this post?")
+  if (areYouSure) {
+   try {
+    const response = await Axios.delete(`/post/${id}`, {data: {token: appState.user.token}}) 
+    if(response.data == "Success"){
+     // .1 Display flash message
+     appDispatch({type:'FLASH_MESSAGE_ACTION', value: `the post ${post.title} ${' '} - ${' '} has been deleted`})
+     // .2 Return back to the current user's profile
+     props.history.push(`/profile/${appState.user.username}`)
+    }
+    }
+   catch (e) {
+    console.log("There was a problem in delete function!");
+   }
+  }
+ }
+
  return (
   <UseEffectPage title={post.title}>
    <div className="d-flex justify-content-between">
     <h2>{post.title}</h2>
     {isOwner() && (
      <span className="pt-2">
-     <NavLink to={`/post/${id}/edit`} data-tip="Edit-marker" data-for="edit" className="text-primary mr-2"><i className="fas fa-edit"></i></NavLink>
-     <ReactToolTip id="edit" className="custom-tooltip" /> {" "}
-     <a data-tip="delete-marker" data-for="delete" className="delete-post-button text-danger"><i className="fas fa-trash"></i></a>
-     <ReactToolTip id="delete" className="custom-tooltip" />
-    </span>
+      <NavLink to={`/post/${id}/edit`} data-tip="Edit-marker" data-for="edit" className="text-primary mr-2"><i className="fas fa-edit"></i></NavLink>
+      <ReactToolTip id="edit" className="custom-tooltip" /> {" "}
+      <a onClick={e => deleteHandler(e)} data-tip="delete-marker" data-for="delete" className="delete-post-button text-danger"><i className="fas fa-trash"></i></a>
+      <ReactToolTip id="delete" className="custom-tooltip" />
+     </span>
     )}
    </div>
 
@@ -97,4 +120,4 @@ function ViewSinglePost(props) {
  )
 }
 
-export default ViewSinglePost
+export default withRouter(ViewSinglePost)
