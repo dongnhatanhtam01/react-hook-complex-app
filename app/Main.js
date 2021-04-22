@@ -27,6 +27,8 @@ import ViewSinglePost from "./components/ViewSinglePost";
 import FlashMessages from "./components/FlashMessages"
 import NotFound from "./components/NotFound"
 import Search from './components/Search'
+import { CSSTransition } from "react-transition-group"
+
 // DAY 15.2.2021 Axios
 Axios.defaults.baseURL = "http://localhost:8080"
 
@@ -101,7 +103,9 @@ function Main() {
        <NotFound />
       </Route>
      </Switch>
-     {state.isSearchOpen ? <Search /> : ""}
+     <CSSTransition timeout={330} in={state.isSearchOpen} classNames="search-overlay" unmountOnExit>
+      <Search />
+     </CSSTransition>
      <Footer />
     </BrowserRouter>
    </DispatchContext.Provider>
