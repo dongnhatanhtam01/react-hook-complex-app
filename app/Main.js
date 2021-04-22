@@ -26,6 +26,7 @@ import CreatePost from "./components/CreatePost";
 import ViewSinglePost from "./components/ViewSinglePost";
 import FlashMessages from "./components/FlashMessages"
 import NotFound from "./components/NotFound"
+import Search from './components/Search'
 // DAY 15.2.2021 Axios
 Axios.defaults.baseURL = "http://localhost:8080"
 
@@ -37,7 +38,8 @@ function Main() {
    token: localStorage.getItem("complexappToken"),
    username: localStorage.getItem("complexappUsername"),
    avatar: localStorage.getItem("complexappAvatar")
-  }
+  },
+  isSearchOpen: false
  }
  function ourReducer(draft, action) {
   switch (action.type) {
@@ -50,6 +52,12 @@ function Main() {
     return
    case "FLASH_MESSAGE_ACTION":
     draft.flashMessages.push(action.value)
+    return
+   case "OPEN_SEARCH":
+    draft.isSearchOpen = true
+    return
+   case "CLOSE_SEARCH":
+    draft.isSearchOpen = false
     return
   }
  }
@@ -93,6 +101,7 @@ function Main() {
        <NotFound />
       </Route>
      </Switch>
+     {state.isSearchOpen ? <Search /> : ""}
      <Footer />
     </BrowserRouter>
    </DispatchContext.Provider>
