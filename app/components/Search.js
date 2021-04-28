@@ -29,9 +29,9 @@ function Search() {
  useEffect(() => {
   const delay = setTimeout(() => {
    console.log(state.searchTerm);
-   // setState(draft => {
-   //  draft.requestCount++
-   // })
+   setState(draft => {
+    draft.requestCount++
+   })
   }, 3000)
   return () => clearTimeout(delay)
  }, [state.searchTerm])
