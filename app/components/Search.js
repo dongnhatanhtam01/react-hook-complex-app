@@ -33,7 +33,7 @@ function Search() {
    //  draft.requestCount++
    // })
   }, 3000)
-  // return () => clearTimeout(delay)
+  return () => clearTimeout(delay)
  }, [state.searchTerm])
 
  useEffect(() => {
