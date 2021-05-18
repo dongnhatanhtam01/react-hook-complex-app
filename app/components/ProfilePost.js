@@ -23,7 +23,7 @@ function ProfilePost() {
     fetchPost()
   }, [])
 
-  if (isLoading) { return <LoadingDotsIcon/> }
+  if (isLoading) { return <LoadingDotsIcon /> }
 
   return (
     <div className="list-group">

@@ -28,6 +28,7 @@ import FlashMessages from "./components/FlashMessages"
 import NotFound from "./components/NotFound"
 import Search from './components/Search'
 import { CSSTransition } from "react-transition-group"
+// import { NavLink, useHistory } from "react-router-dom"
 
 // DAY 15.2.2021 Axios
 Axios.defaults.baseURL = "http://localhost:8080"
@@ -51,6 +52,7 @@ function Main() {
     return
    case "LOG_OUT_ACTION":
     draft.loggedIn = false
+    // useHistory().goBack
     return
    case "FLASH_MESSAGE_ACTION":
     draft.flashMessages.push(action.value)

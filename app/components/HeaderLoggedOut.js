@@ -17,7 +17,7 @@ function HeaderLoggedOut(props) {
    if (response.data) {
     appDispatch({ type: "LOG_IN_ACTION", data: response.data })
     appDispatch({ type: "FLASH_MESSAGE_ACTION", value: "Congrats, You have logged in successfully..!" })
-    // props.history.push(`/profile/${response.data.username}`)
+    props.history.push(`/profile/${response.data.username}`)
 
    }
    else {
