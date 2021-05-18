@@ -21,7 +21,7 @@ function ProfilePost() {
       }
     }
     fetchPost()
-  }, [])
+  }, [username])
 
   if (isLoading) { return <LoadingDotsIcon /> }
 

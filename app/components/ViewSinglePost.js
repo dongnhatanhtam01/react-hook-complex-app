@@ -36,7 +36,7 @@ function ViewSinglePost(props) {
     return () => {
       ourRequest.cancel()
     }
-  },[id])
+  }, [id])
 
   if (!isLoading && !post) {
     return (
