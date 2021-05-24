@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react"
 
 import { useParams, Link } from "react-router-dom"
 import LoadingDotsIcon from "./LoadingDotsIcon"
+import Post from "./Post"
 
 function ProfilePost() {
   const { username } = useParams()
@@ -28,16 +29,18 @@ function ProfilePost() {
   return (
     <div className="list-group">
       {posts.map((post, index) => {
-        // string to Date()
-        const date = new Date(post.createdDate)
-        // ngày date máy tính theo 0, tháng không có tháng 0
-        const dateFomatted = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
-        return (
-          <Link key={post._id} to={`/post/${post._id}`} className="list-group-item list-group-item-action">
-            <img className="avatar-tiny" src={post.author.avatar} /> <strong>{post.title}</strong>{" "}
-            <span className="text-muted small">{dateFomatted} </span>
-          </Link>
-        )
+        // // string to Date()
+        // const date = new Date(post.createdDate)
+        // // ngày date máy tính theo 0, tháng không có tháng 0
+        // const dateFomatted = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
+        // return (
+        //   <Link key={post._id} to={`/post/${post._id}`} className="list-group-item list-group-item-action">
+        //     <img className="avatar-tiny" src={post.author.avatar} /> <strong>{post.title}</strong>{" "}
+        //     <span className="text-muted small">{dateFomatted} </span>
+        //   </Link>
+        
+        // )
+        return <Post noAuthor={true}  post={post} key={post._id}/>
       })}
     </div>
   )
