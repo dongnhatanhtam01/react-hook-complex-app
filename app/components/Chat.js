@@ -21,6 +21,7 @@ function Chat() {
   useEffect(() => {
     if (appState.isChatOpen) {
       chatField.current.focus()
+      appDispatch({type: "CLEAR_UNREAD_CHATCOUNT"})
     }
   }, [appState.isChatOpen])
 
@@ -37,6 +38,9 @@ function Chat() {
   // chatLog.current = DOM 
   useEffect(() => {
    chatLog.current.scrollTop = chatLog.current.scrollHeight
+   if (state.chatMessages.length && !appState.isChatOpen) {
+    appDispatch({type: "INCREMENT_UNREAD_CHATCOUNT"})
+   }
   }, [state.chatMessages])
 
   function handleFieldChange(e) {
