@@ -28,17 +28,22 @@ function HeaderLoggedIn(props) {
         <i className="fas fa-search"></i>
       </a>
       <ReactTooltip place="bottom" id="search" className="custom-tooltip" />
-      {" "}<span
+      {" "}
+      {/* span Hiện chat notify nếu có tin nhắn tới */}
+      <span
         data-tip="Chat" data-for="chat"
         onClick={() => appDispatch({ type: "TOOGLE_CHAT" })}
-        className={"mr-2 header-chat-icon " + (appState.unreadChatCount ? "text-danger": "text-white")}>
+        className={"mr-2 header-chat-icon " + (appState.unreadChatCount ? "text-danger" : "text-white")}
+      >
         <i className="fas fa-comment"></i>
-       {appState.unreadChatCount ?  <span className="chat-count-badge text-white">{appState.unreadChatCount<10 ? appState.unreadChatCount : "9+"} </span>  : ""}
+        {appState.unreadChatCount ?
+          <span className="chat-count-badge text-white">{appState.unreadChatCount < 10 ? appState.unreadChatCount : "9+"} </span> : ""}
       </span>
+      {/* span  */}
       {" "}<NavLink to={`/profile/${appState.user.username}`} className="mr-2">
         <img className="small-header-avatar" src={appState.user.avatar} />
       </NavLink>
-      {" "}<NavLink className="btn btn-sm btn-outline-warning mr-2" to="/create-new-post">
+      {" "}<NavLink className="btn btn-sm btn-primary mr-2" to="/create-new-post">
         Create Post
           </NavLink>
       <NavLink onClick={() => handleLogout()} to="/" className="btn btn-sm btn-secondary">

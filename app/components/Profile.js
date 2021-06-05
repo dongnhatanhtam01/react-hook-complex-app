@@ -120,7 +120,7 @@ function Profile() {
     })
   }
   return (
-    <UseEffectPage title="Profile Screen">
+    <UseEffectPage title="Profile Screen" >
       <h2>
         <img className="avatar-small" src={state.profileData.profileAvatar} /> {state.profileData.profileUsername}
         {appState.loggedIn && !state.profileData.isFollowing && appState.user.username != state.profileData.profileUsername && state.profileData.profileUsername != "..." && (

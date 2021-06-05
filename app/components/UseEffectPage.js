@@ -12,7 +12,7 @@ function UseEffectPage(props) {
     console.log(props.children);
   },[props.title])
   return (
-    <Container wide={props.wide}>
+    <Container wide={props.wide} >
       {props.children}
     </Container>
   )

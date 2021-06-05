@@ -1,8 +1,33 @@
 body {
+    position: inherit;
+    /* background-color: #cccccc; */
+    padding: 0 !important;
+    width: 100%;
     font-family: "Public Sans", sans-serif;
+    /* overflow-y: auto; */
+    scrollbar-width: none;
+    margin-bottom: 3rem;
+    z-index: inherit;
+    /* height: 100vh; */
+    /* background-image: url("https://picsum.photos/200/300"); */
+    /* background-image: url("photographer.jpg"); */
+    /* The image used */
+    /* height: 500px; */
+    /* background-position: center; */
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
 }
 
+
+/* .container {
+  margin-top: 5rem !important;
+} */
+
 .header-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
     background-color: #292929;
 }
 
@@ -581,4 +606,20 @@ textarea.tall-textarea {
     60% {
         opacity: 1;
     }
+}
+
+
+/* footer */
+
+
+/* #app {
+    overflow-y: scroll;
+} */
+
+footer {
+    position: fixed;
+    bottom: 0;
+    height: "100px";
+    bottom: 0;
+    width: 100%;
 }

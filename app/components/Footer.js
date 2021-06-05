@@ -2,10 +2,7 @@ import React from "react"
 import { Link, NavLink } from "react-router-dom";
 function Footer() {
   return (
-    <footer className="border-top bg-light text-center small text-muted py-3 " style={{position: "inherit",
-      height: "100px",
-      bottom: 0,
-      width: "100%",}}>
+    <footer className="border-top bg-light text-center small text-muted py-3 " >
       <p>
         <Link to="/" className="mx-1">Home</Link> | <Link className="mx-1" to="/about-us">About Us</Link> | <Link className="mx-1" to="/terms">Terms</Link>
       </p>
