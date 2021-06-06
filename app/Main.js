@@ -35,7 +35,6 @@ import { NavLink, useHistory } from "react-router-dom"
 Axios.defaults.baseURL = "http://localhost:8080"
 
 function Main(props) {
-  const history = useHistory()
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("complexappToken")),
     flashMessages: [],
@@ -56,6 +55,7 @@ function Main(props) {
         return
       case "LOG_OUT_ACTION":
         draft.loggedIn = false
+        draft.user.token = ""
         // useHistory().goBack
         return
       case "FLASH_MESSAGE_ACTION":
@@ -105,10 +105,11 @@ function Main(props) {
         try {
           const response = await Axios.post("/checkToken", { token: state.user.token }, { cancelToken: ourRequest.token })
           if (!response.data) {
-            dispatch({ type: "LOG_OUT_ACTION" })
-            dispatch({ type: "FLASH_MESSAGE_ACTION", value: "The session has expired, please log in again." })
-            history.push("/")
-            window.location.reload()
+            alert("The session has expired, please log in again.")
+            setTimeout(() => {
+              dispatch({ type: "FLASH_MESSAGE_ACTION", value: "The session has expired, please log in again." })
+              dispatch({ type: "LOG_OUT_ACTION" })
+            }, 500)
           }
         }
         catch (err) {
@@ -117,15 +118,16 @@ function Main(props) {
       }
       fetchResults()
       return () => {
-        history.push("/")
         ourRequest.cancel()
       }
+    } else {
+      dispatch({ type: "FLASH_MESSAGE_ACTION", value: "The session has expired, please log in again. Or you didn't have any account." })
     }
   }, [])
 
   return (
     /** DAY 23.02.2021 adding Ex.., and distribute to particular
-     component consuming the addFlashMessage trong value*/
+     component consuming the addFlashMessage trong value */
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
         <BrowserRouter>
