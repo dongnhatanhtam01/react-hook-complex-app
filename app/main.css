@@ -215,7 +215,7 @@ textarea.tall-textarea {
     display: flex;
     flex-direction: column;
     position: fixed;
-    z-index: 9000;
+    z-index: 99999;
     top: 0;
     left: 0;
     bottom: 0;

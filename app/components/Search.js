@@ -103,11 +103,11 @@ function Search() {
               <div className="list-group shadow-sm">
                 <div className="list-group-item active bg-success "><strong>Search Results</strong>({state.results.length}  {state.results.length > 1 ? "items" : "item"}) found</div>
                 { state.results.map(post => {
-                 return <Post post={post} key={post._id} onClick={()=> appDispatch({ type: "CLOSE_SEARCH" })}/>
+                  return <Post post={post} key={post._id} onClick={() => appDispatch({ type: "CLOSE_SEARCH" })} />
                 })}
               </div>
             )}
-            {!Boolean(state.results.length)&& <p className="alert alert-danger text-center shadow-sm">Sorry, we could not find results for that search.</p>}
+            {!Boolean(state.results.length) && <p className="alert alert-danger text-center shadow-sm">Sorry, we could not find results for that search.</p>}
           </div>
         </div>
       </div>
