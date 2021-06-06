@@ -11,6 +11,7 @@ function HeaderLoggedIn(props) {
   // const { addFlashMessage, setLoggedIn } = useContext(ExampleContext)
   function handleLogout() {
     appDispatch({ type: "LOG_OUT_ACTION" })
+    appDispatch({ type: "FLASH_MESSAGE_ACTION", value: "See you again..." })
     if (!localStorage.getItem("complexappToken")) {
       appDispatch({ type: "FLASH_MESSAGE_ACTION", value: "See you again..." })
       // addFlashMessage("You successful logged out your account!")

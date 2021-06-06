@@ -50,7 +50,7 @@ function HomeGuest() {
           draft.username.hasErrors = true
           draft.username.message = "Username must be at least 3 characters."
         }
-        if (!draft.username.hasErrors) {
+        if (!draft.username.hasErrors && !action.noRequest) {
           draft.username.checkCount++
         }
         return
@@ -73,43 +73,53 @@ function HomeGuest() {
           draft.email.hasErrors = true
           draft.email.message = "You must provide a valid email address."
         }
-        if (!draft.email.hasErrors) {
+        if (!draft.email.hasErrors && !action.noRequest) {
           draft.email.checkCount++
         }
         return
       // check EMAIL is unique after typing key-stroke 
       case "EMAIL_IS_UNIQUE_HAH":
-        if(action.value) {
+        if (action.value) {
           draft.email.hasErrors = true
           draft.email.isUnique = false
           draft.email.message = "That email is already used."
-        }else {
+        } else {
           draft.email.isUnique = true
         }
         return
       case "PW_IMMEDIATELY":
         draft.password.hasErrors = false
         draft.password.value = action.value
-        if(draft.password.value.length > 50) {
+        if (draft.password.value.length > 50) {
           draft.password.hasErrors = true
           draft.password.message = "Password cannot exceed 50 characters."
         }
         return
       case "PW_AFTER_DELAYED":
-        if(draft.password.value.length < 12) {
+        if (draft.password.value.length < 12) {
           draft.password.hasErrors = true
           draft.password.message = "Password must be at least 12 characters."
         }
         return
-      // dispatch submit
+      // dispatch submit && change noRequest value
       case "SUBMIT_FORM_HAH":
+        if (!draft.username.hasErrors && draft.username.isUnique && !draft.email.hasErrors && draft.email.isUnique && !draft.password.hasErrors) {
+          draft.submitCount++
+        }else{
+          appDispatch({type:"FLASH_MESSAGE_ACTION", value:`${(draft.username.message)+(<br />)+draft.email.message+(<br/>)+draft.password.message}`})
+        }
         return
     }
   }
+
+
+
   const [state, dispatch] = useImmerReducer(ourReducer, initialState)
   // const [username, setUsername] = useState()
   // const [email, setEmail] = useState()
   // const [password, setPassword] = useState()
+
+
 
   // timeour keystroke username    // /*|USEEFFECT WORKING change dependencies value|*/
   useEffect(() => {
@@ -183,44 +193,69 @@ function HomeGuest() {
     }
   }, [state.email.checkCount])
 
-    // PW_CHECK_UNIQUE     /*|USEEFFECT WORKING BASED ON DEPENDENCIES|*/
-    useEffect(() => {
-      if (state.password.checkCount) {
-        // Send axios request here
-        const ourRequest = Axios.CancelToken.source()
-        async function fetchResults() {
-          try {
-            const response = await Axios.post("/doesUsernameExist", { username: state.username.value }, { cancelToken: ourRequest.token })
-            dispatch({ type: "USERNAME_IS_UNIQUE_HAH", value: response.data })
-          }
-          catch (err) {
-            console.log("There was a problem or the request was cancelled.")
-            appDispatch({ type: "FLASH_MESSAGE_ACTION", value: "There was a problem or the request was cancelled." })
-          }
+  // PW_CHECK_UNIQUE     /*|USEEFFECT WORKING BASED ON DEPENDENCIES|*/
+  useEffect(() => {
+    if (state.password.checkCount) {
+      // Send axios request here
+      const ourRequest = Axios.CancelToken.source()
+      async function fetchResults() {
+        try {
+          const response = await Axios.post("/doesUsernameExist", { username: state.username.value }, { cancelToken: ourRequest.token })
+          dispatch({ type: "USERNAME_IS_UNIQUE_HAH", value: response.data })
         }
-        fetchResults()
-        return () => ourRequest.cancel()
+        catch (err) {
+          console.log("There was a problem or the request was cancelled.")
+          appDispatch({ type: "FLASH_MESSAGE_ACTION", value: "There was a problem or the request was cancelled." })
+        }
       }
-    }, [state.password.checkCount])
+      fetchResults()
+      return () => ourRequest.cancel()
+    }
+  }, [state.password.checkCount])
 
-
-  // TODO /**HOMEGUEST prototypes */
+  // SUBMIT_CHECK     /*|USEEFFECT WORKING BASED ON DEPENDENCIES|*/
+  useEffect(() => {
+    if (state.submitCount) {
+      // Send axios request here
+      const ourRequest = Axios.CancelToken.source()
+      async function fetchResults() {
+        try {
+          const response = await Axios.post("/register", { username: state.username.value, email: state.email.value, password: state.password.value }, { cancelToken: ourRequest.token })
+          appDispatch({ type: "LOG_IN_ACTION", data: response.data })
+          appDispatch({ type: "FLASH_MESSAGE_ACTION", value: `Congrate, Welcome to your new account ${response.data.username}` })
+        }
+        catch (err) {
+          console.log("There was a problem or the request was cancelled.")
+          appDispatch({ type: "FLASH_MESSAGE_ACTION", value: `${err.response.data}` })
+        }
+      }
+      fetchResults()
+      return () => ourRequest.cancel()
+    }
+  }, [state.submitCount])
   function handleSubmit(e) {
     e.preventDefault()
+    dispatch({ type: "USERNAME_IMMEDIATELY", value: state.username.value })
+    dispatch({ type: "USERNAME_AFTER_DELAYED", value: state.username.value, noRequest: true })
+    dispatch({ type: "EMAIL_IMMEDIATELY", value: state.email.value })
+    dispatch({ type: "EMAIL_AFTER_DELAYED", value: state.email.value, noRequest: true })
+    dispatch({ type: "PW_IMMEDIATELY", value: state.password.value })
+    dispatch({ type: "PW_AFTER_DELAYED", value: state.password.value })
+    dispatch({ type: "SUBMIT_FORM_HAH" })
   }
-  // function handleSubmit(e) {
-  //   e.preventDefault()
-  // try {
-  //   const res = await Axios.post("/register", { username, email, password })
-  //   if (res) {
-  //     console.log(res);
-  //     appDispatch({ type: "FLASH_MESSAGE_ACTION", value: `${res.data.username}+ is just created.` })
-  //   }
-  // } catch (e) {
-  //   // FlashMessages
-  //   appDispatch({ type: "FLASH_MESSAGE_ACTION", value: `${e.response.data}` })
-  // }
-  // }
+  /** function handleSubmit(e) {
+    e.preventDefault()
+  try {
+    const res = await Axios.post("/register", { username, email, password })
+    if (res) {
+      console.log(res);
+      appDispatch({ type: "FLASH_MESSAGE_ACTION", value: `${res.data.username}+ is just created.` })
+    }
+  } catch (e) {
+    // FlashMessages
+    appDispatch({ type: "FLASH_MESSAGE_ACTION", value: `${e.response.data}` })
+  }
+  }*/
   return (
     <UseEffectPage title="Welcome!" wide={true} >
       <div className="row align-items-center">
