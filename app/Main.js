@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from "react"
+import React, { useState, useReducer, useEffect, Suspense } from "react"
 import ReactDOM from "react-dom"
 // DAY 05.03.2021
 import EditPost from "./components/EditPost"
@@ -22,14 +22,17 @@ import Terms from "./components/Terms"
 import Header from "./components/Header"
 import HomeGuest from "./components/HomeGuest"
 import Footer from "./components/Footer"
-import CreatePost from "./components/CreatePost";
-import ViewSinglePost from "./components/ViewSinglePost";
+const CreatePost = React.lazy(() => import("./components/CreatePost")) // Lazyload app_component_CreatPost.bundled.js
+// import CreatePost from "./components/CreatePost";
+const ViewSinglePost = React.lazy(()=>import("./components/ViewSinglePost")) // app_component_ViewSinglePost
+// import ViewSinglePost from "./components/ViewSinglePost";
 import FlashMessages from "./components/FlashMessages"
 import NotFound from "./components/NotFound"
 import Search from './components/Search'
 import { CSSTransition } from "react-transition-group"
 import Chat from "./components/Chat";
 import { NavLink, useHistory } from "react-router-dom"
+import LoadingDotsIcon from "./components/LoadingDotsIcon";
 
 // DAY 15.2.2021 Axios
 Axios.defaults.baseURL = "http://localhost:8080"
@@ -133,25 +136,27 @@ function Main(props) {
         <BrowserRouter>
           <FlashMessages messages={state.flashMessages} />
           <Header />
-          <Switch>
-            <Route path="/profile/:username">
-              <Profile />
-            </Route>
-            <Route path="/" exact  >
-              {state.loggedIn ? <Home /> : <HomeGuest />}
-            </Route>
-            <Route path="/post/:id" exact component={ViewSinglePost} />
-            <Route path="/post/:id/edit" exact component={EditPost} />
-            <Route path="/create-new-post" exact  >
-              <CreatePost />
-            </Route>
-            <Route path="/about-us" exact component={About} />
-            <Route path="/terms" exact component={Terms} />
+          <Suspense fallback={LoadingDotsIcon}>
+            <Switch>
+              <Route path="/profile/:username">
+                <Profile />
+              </Route>
+              <Route path="/" exact  >
+                {state.loggedIn ? <Home /> : <HomeGuest />}
+              </Route>
+              <Route path="/post/:id" exact component={ViewSinglePost} />
+              <Route path="/post/:id/edit" exact component={EditPost} />
+              <Route path="/create-new-post" exact  >
+                <CreatePost />
+              </Route>
+              <Route path="/about-us" exact component={About} />
+              <Route path="/terms" exact component={Terms} />
 
-            <Route>
-              <NotFound />
-            </Route>
-          </Switch>
+              <Route>
+                <NotFound />
+              </Route>
+            </Switch>
+          </Suspense>
           <CSSTransition timeout={330} in={state.isSearchOpen} classNames="search-overlay" unmountOnExit>
             <Search />
           </CSSTransition>
