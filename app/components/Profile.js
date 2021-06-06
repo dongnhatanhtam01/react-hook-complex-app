@@ -8,8 +8,9 @@ import { useImmer } from "use-immer"
 import ProfilePost from "./ProfilePost"
 import ProfileFollowers from "./ProfileFollowers"
 import ProfileFollowing from "./ProfileFollowing"
+import { withRouter } from "react-router-dom"
 
-function Profile() {
+function Profile(props) {
   const { username } = useParams()
   const appState = useContext(StateContext)
   const [state, setState] = useImmer({
@@ -40,22 +41,27 @@ function Profile() {
   useEffect(() => {
     const ourRequest = axios.CancelToken.source()
     async function fetchData() {
-      try {
-        const response = await axios.post(`/profile/${username}`, { token: appState.user.token })
-        setState(draft => {
-          draft.profileData = response.data
-        })
-        // setUserProfileData(response.data)
-      }
-      catch (e) {
-        console.log("There were a problem");
+      if (appState.user.token) {
+        try {
+          const response = await axios.post(`/profile/${username}`, { token: appState.user.token })
+          setState(draft => {
+            draft.profileData = response.data
+          })
+          // setUserProfileData(response.data)
+        }
+        catch (e) {
+          console.log("There were a problem");
+        }
+      } else {
+        props.history.push("/")
+        window.location.replace("/")
       }
     }
     fetchData()
     return () => {
       ourRequest.cancel()
     }
-  }, [username])
+  }, [appState.user.token])
 
   useEffect(() => {
     if (state.startFollowingRequestCount) {
@@ -156,4 +162,4 @@ function Profile() {
   )
 }
 
-export default Profile
+export default withRouter(Profile)
