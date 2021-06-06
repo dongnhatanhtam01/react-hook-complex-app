@@ -24,13 +24,15 @@ import HomeGuest from "./components/HomeGuest"
 import Footer from "./components/Footer"
 const CreatePost = React.lazy(() => import("./components/CreatePost")) // Lazyload app_component_CreatPost.bundled.js
 // import CreatePost from "./components/CreatePost";
-const ViewSinglePost = React.lazy(()=>import("./components/ViewSinglePost")) // app_component_ViewSinglePost
+const ViewSinglePost = React.lazy(() => import("./components/ViewSinglePost")) // app_component_ViewSinglePost
 // import ViewSinglePost from "./components/ViewSinglePost";
 import FlashMessages from "./components/FlashMessages"
 import NotFound from "./components/NotFound"
-import Search from './components/Search'
+const Search = React.lazy(() => import("./components/Search"))
+// import Search from './components/Search'
 import { CSSTransition } from "react-transition-group"
-import Chat from "./components/Chat";
+const Chat = React.lazy(() => import("./components/Chat"))
+// import Chat from "./components/Chat";
 import { NavLink, useHistory } from "react-router-dom"
 import LoadingDotsIcon from "./components/LoadingDotsIcon";
 
@@ -158,9 +160,16 @@ function Main(props) {
             </Switch>
           </Suspense>
           <CSSTransition timeout={330} in={state.isSearchOpen} classNames="search-overlay" unmountOnExit>
-            <Search />
+            <div className="search-overlay">
+              <Suspense fallback="">
+                <Search />
+              </Suspense>
+            </div>
+            {/* <Search /> */}
           </CSSTransition>
-          <Chat />
+          <Suspense fallback="">
+            {state.loggedIn && <Chat />}
+          </Suspense>
           <Footer />
         </BrowserRouter>
       </DispatchContext.Provider>

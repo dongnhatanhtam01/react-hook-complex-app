@@ -83,7 +83,7 @@ function Search() {
   }
 
   return (
-    <div className="search-overlay">
+    <>
       <div className="search-overlay-top shadow-sm bg-dark">
         <div className="container container--narrow">
           <label htmlFor="live-search-field" className="search-overlay-icon">
@@ -111,7 +111,7 @@ function Search() {
           </div>
         </div>
       </div>
-    </div>
+    </>
 
   )
 }

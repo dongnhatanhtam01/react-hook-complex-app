@@ -3,11 +3,12 @@ import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
 import { useImmer } from "use-immer"
 import io from 'socket.io-client'
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 
-const socket = io("http://localhost:8080")
+// const socket = io("http://localhost:8080")
 
 function Chat() {
+  const socket = useRef(null)
   const chatField = useRef(null)
   const chatLog = useRef(null)
   const appState = useContext(StateContext)
@@ -21,26 +22,29 @@ function Chat() {
   useEffect(() => {
     if (appState.isChatOpen) {
       chatField.current.focus()
-      appDispatch({type: "CLEAR_UNREAD_CHATCOUNT"})
+      appDispatch({ type: "CLEAR_UNREAD_CHATCOUNT" })
     }
   }, [appState.isChatOpen])
 
   // setup socket 
   useEffect(() => {
-    socket.on("chatFromServer",message => {
+    socket.current = io("http://localhost:8080")
+    socket.current.on("chatFromServer", message => {
       setState(draft => {
         draft.chatMessages.push(message)
       })
     })
+
+    return () => socket.current.disconnect()
   }, [])
-  
+
   // set scrollTop theo chatLog
   // chatLog.current = DOM 
   useEffect(() => {
-   chatLog.current.scrollTop = chatLog.current.scrollHeight
-   if (state.chatMessages.length && !appState.isChatOpen) {
-    appDispatch({type: "INCREMENT_UNREAD_CHATCOUNT"})
-   }
+    chatLog.current.scrollTop = chatLog.current.scrollHeight
+    if (state.chatMessages.length && !appState.isChatOpen) {
+      appDispatch({ type: "INCREMENT_UNREAD_CHATCOUNT" })
+    }
   }, [state.chatMessages])
 
   function handleFieldChange(e) {
@@ -56,7 +60,7 @@ function Chat() {
     e.preventDefault()
     // alert(state.fieldValue)
     // send messages to chat server
-    socket.emit("chatFromBrowser",{message: state.fieldValue, token: appState.user.token})
+    socket.current.emit("chatFromBrowser", { message: state.fieldValue, token: appState.user.token })
     setState(draft => {
       // Add messages to state collection of messages
       draft.chatMessages.push({ message: draft.fieldValue, username: appState.user.username, avatar: appState.user.avatar })
@@ -79,15 +83,15 @@ function Chat() {
         {state.chatMessages.map((message, index) => {
           if (message.username == appState.user.username) {
             return (
-            <div key={index} className="chat-self">
-              <div className="chat-message">
-                <div className="chat-message-inner">{message.message}</div>
+              <div key={index} className="chat-self">
+                <div className="chat-message">
+                  <div className="chat-message-inner">{message.message}</div>
+                </div>
+                <img className="chat-avatar avatar-tiny" src={message.avatar} />
               </div>
-              <img className="chat-avatar avatar-tiny" src={message.avatar} />
-            </div>
             )
           }
-          return (<div key={index}  className="chat-other">
+          return (<div key={index} className="chat-other">
             <Link to={`/profile/${message.username}`}>
               <img className="avatar-tiny" src={message.avatar} />
             </Link>
@@ -96,8 +100,8 @@ function Chat() {
                 <Link to={`/profile/${message.username}`}>
                   <strong>{message.username}: </strong>
                 </Link>
-              {message.message}
-            </div>
+                {message.message}
+              </div>
             </div>
           </div>)
         })}
