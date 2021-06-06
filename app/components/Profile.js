@@ -9,10 +9,12 @@ import ProfilePost from "./ProfilePost"
 import ProfileFollowers from "./ProfileFollowers"
 import ProfileFollowing from "./ProfileFollowing"
 import { withRouter } from "react-router-dom"
+import DispatchContext from "../DispatchContext"
 
 function Profile(props) {
   const { username } = useParams()
   const appState = useContext(StateContext)
+  const appDispatch = useContext(DispatchContext)
   const [state, setState] = useImmer({
     followActionLoading: false,
     startFollowingRequestCount: 0,
@@ -39,29 +41,41 @@ function Profile(props) {
   //   }
   // })
   useEffect(() => {
+    if (!appState.user.token) {
+      debugger
+      appDispatch({ type: "LOG_OUT_ACTION" })
+      appDispatch({ type: "FLASH_MESSAGE_ACTION", value: "The session has expired, please log in again." })
+      props.history.push("/")
+      window.location.replace("/")
+    }
+  }, [appState.user.token])
+
+  useEffect(() => {
     const ourRequest = axios.CancelToken.source()
+    // if (appState.loggedIn) {
     async function fetchData() {
-      if (appState.user.token) {
-        try {
-          const response = await axios.post(`/profile/${username}`, { token: appState.user.token })
-          setState(draft => {
-            draft.profileData = response.data
-          })
-          // setUserProfileData(response.data)
-        }
-        catch (e) {
-          console.log("There were a problem");
-        }
-      } else {
-        props.history.push("/")
-        window.location.replace("/")
+      try {
+        const response = await axios.post(`/profile/${username}`, { token: appState.user.token })
+        setState(draft => {
+          draft.profileData = response.data
+        })
+        // setUserProfileData(response.data)
+      }
+      catch (e) {
+        console.log("There were a problem");
       }
     }
     fetchData()
     return () => {
       ourRequest.cancel()
     }
-  }, [appState.user.token])
+    // } else {
+    //   props.history.push("/")
+    //   window.location.replace("/")
+    // }
+  }, [username])
+
+
 
   useEffect(() => {
     if (state.startFollowingRequestCount) {

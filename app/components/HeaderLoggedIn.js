@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react"
-import { NavLink, useHistory } from "react-router-dom"
+import { NavLink, useHistory, useParams } from "react-router-dom"
 import ReactTooltip from "react-tooltip"
 import DispatchContext from "../DispatchContext"
 import StateContext from "../StateContext"
@@ -8,6 +8,7 @@ function HeaderLoggedIn(props) {
   const appHistory = useHistory()
   const appDispatch = useContext(DispatchContext)
   const appState = useContext(StateContext)
+  const {username} = useParams()
   // const { addFlashMessage, setLoggedIn } = useContext(ExampleContext)
   function handleLogout() {
     appDispatch({ type: "LOG_OUT_ACTION" })
