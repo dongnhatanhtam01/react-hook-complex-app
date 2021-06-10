@@ -35,7 +35,7 @@ import { NavLink, useHistory } from "react-router-dom"
 import LoadingDotsIcon from "./components/LoadingDotsIcon";
 
 // DAY 15.2.2021 Axios
-Axios.defaults.baseURL = "http://localhost:8080"
+Axios.defaults.baseURL = process.env.BACKENDURL || ""
 
 function Main(props) {
   const initialState = {
