@@ -31,7 +31,8 @@ function Chat() {
   // setup socket 
   useEffect(() => {
     // mở socket.io mỗi lần nhắc tới component Chat
-    socket.current = io("http://localhost:8080")
+    // socket.current = io("http://localhost:8080")
+    socket.current = io(process.env.BACKENDURL || "https://tongxinbackendformyreactapp123.herokuapp.com")
     socket.current.on("chatFromServer", message => {
       setState(draft => {
         draft.chatMessages.push(message)

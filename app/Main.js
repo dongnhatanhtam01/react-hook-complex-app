@@ -37,7 +37,7 @@ import { NavLink, useHistory } from "react-router-dom"
 import LoadingDotsIcon from "./components/LoadingDotsIcon";
 
 // DAY 15.2.2021 Axios
-Axios.defaults.baseURL = process.env.BACKENDURL || ""
+Axios.defaults.baseURL = process.env.BACKENDURL || "https://tongxinbackendformyreactapp123.herokuapp.com"
 
 function Main(props) {
   const initialState = {
