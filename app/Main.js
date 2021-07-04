@@ -28,7 +28,11 @@ const ViewSinglePost = React.lazy(() => import("./components/ViewSinglePost")) /
 // import ViewSinglePost from "./components/ViewSinglePost";
 import FlashMessages from "./components/FlashMessages"
 import NotFound from "./components/NotFound"
+<<<<<<< HEAD
 const Search = React.lazy(() => import("./components/Search"))
+=======
+const Search = React.lazy(() => import("./components/Search")) //
+>>>>>>> 583789c4c5853ef8ffe039c640d9b72564f8f269
 // import Search from './components/Search'
 import { CSSTransition } from "react-transition-group"
 const Chat = React.lazy(() => import("./components/Chat"))
@@ -37,7 +41,7 @@ import { NavLink, useHistory } from "react-router-dom"
 import LoadingDotsIcon from "./components/LoadingDotsIcon";
 
 // DAY 15.2.2021 Axios
-Axios.defaults.baseURL = "http://localhost:8080"
+Axios.defaults.baseURL = process.env.BACKENDURL || "https://tongxinbackendformyreactapp123.herokuapp.com"
 
 function Main(props) {
   const initialState = {
@@ -165,7 +169,10 @@ function Main(props) {
                 <Search />
               </Suspense>
             </div>
+<<<<<<< HEAD
             {/* <Search /> */}
+=======
+>>>>>>> 583789c4c5853ef8ffe039c640d9b72564f8f269
           </CSSTransition>
           <Suspense fallback="">
             {state.loggedIn && <Chat />}

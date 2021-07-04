@@ -8,7 +8,13 @@ import { Link } from "react-router-dom"
 // const socket = io("http://localhost:8080")
 
 function Chat() {
+<<<<<<< HEAD
   const socket = useRef(null)
+=======
+  // khai báo socket
+  const socket = useRef(null)
+
+>>>>>>> 583789c4c5853ef8ffe039c640d9b72564f8f269
   const chatField = useRef(null)
   const chatLog = useRef(null)
   const appState = useContext(StateContext)
@@ -28,14 +34,25 @@ function Chat() {
 
   // setup socket 
   useEffect(() => {
+<<<<<<< HEAD
     socket.current = io("http://localhost:8080")
+=======
+    // mở socket.io mỗi lần nhắc tới component Chat
+    // socket.current = io("http://localhost:8080")
+    socket.current = io(process.env.BACKENDURL || "https://tongxinbackendformyreactapp123.herokuapp.com")
+>>>>>>> 583789c4c5853ef8ffe039c640d9b72564f8f269
     socket.current.on("chatFromServer", message => {
       setState(draft => {
         draft.chatMessages.push(message)
       })
     })
+<<<<<<< HEAD
 
     return () => socket.current.disconnect()
+=======
+    // Đóng socket.io khi chyạ lại component
+    return () => socket.current.current.disconnect()
+>>>>>>> 583789c4c5853ef8ffe039c640d9b72564f8f269
   }, [])
 
   // set scrollTop theo chatLog
