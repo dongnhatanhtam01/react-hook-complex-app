@@ -3,12 +3,13 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
+
     "scripts": {
         "dev": "npm-run-all -s generate webpackDev",
-        "webpackDev": "webpack serve --config webpack.config.js --open",
+        "webpackDev": "webpack serve",
         "build": "npm-run-all -s generate webpackBuild",
         "webpackBuild": "webpack",
-        "generate": "babel-node --presets=@babel/preset-react,@babel/preset-env generateHTML.js",
+        "generate": "babel-node --presets=@babel/preset-react,@babel/preset-env generateHtml.js",
         "previewDist": "node previewDist",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
