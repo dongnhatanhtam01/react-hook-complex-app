@@ -9,7 +9,7 @@
         "webpackDev": "webpack serve",
         "build": "npm-run-all -s generate webpackBuild",
         "webpackBuild": "webpack",
-        "generate": "babel-node --presets=@babel/preset-react,@babel/preset-env generateHtml.js",
+        "generate": "babel-node --presets=@babel/preset-react,@babel/preset-env generateHTML.js",
         "previewDist": "node previewDist",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
