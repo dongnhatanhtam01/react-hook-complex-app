@@ -1,5 +1,5 @@
 import React from "react"
-import UseEffectPage from "./useEffectPage"
+import UseEffectPage from "./UseEffectPage"
 
 function Terms() {
   return (
