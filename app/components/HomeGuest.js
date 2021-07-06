@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react"
-import UseEffectPage from "./useEffectPage"
+import UseEffectPage from "./UseEffectPage"
 import Axios from "axios"
 import FlashMessages from "./FlashMessages"
 import DispatchContext from "../DispatchContext"
