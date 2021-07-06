@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import UseEffectPage from "./UseEffectPage"
+import UseEffectPage from "../components/UseEffectPage"
 
 function About() {
   // không dùng useEffect ở đây nữa
